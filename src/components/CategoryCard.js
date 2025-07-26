@@ -10,7 +10,6 @@ export default function CategoryCard({ title, slug }) {
   return (
     <div onClick={handleClick} style={styles.card}>
       <img
-        src={`https://source.unsplash.com/400x300/?${slug}`}
         alt={title}
         style={styles.image}
       />
