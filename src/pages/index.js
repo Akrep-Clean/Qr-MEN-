@@ -1,17 +1,30 @@
 import CategoryCard from '../components/CategoryCard';
 
 export async function getServerSideProps() {
-  // Ortama göre base URL ayarı
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-
-  const res = await fetch(`${baseUrl}/api/categories`);
-  const categories = await res.json();
-
-  return {
-    props: { categories },
-  };
+  
+  try {
+    const res = await fetch(`${baseUrl}/api/categories`);
+    
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    
+    const data = await res.text(); // Önce metin olarak al
+    console.log('Raw response:', data); // Hata ayıklama için
+    
+    const categories = JSON.parse(data);
+    
+    return {
+      props: { categories },
+    };
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    return {
+      props: { categories: [] }, // Hata durumunda boş array dön
+    };
+  }
 }
-
 export default function HomePage({ categories }) {
   return (
     <div style={styles.container}>
