@@ -1,40 +1,36 @@
+// pages/index.js
+import { prisma } from '../lib/prisma';
 import CategoryCard from '../components/CategoryCard';
 
 export async function getServerSideProps() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-  
   try {
-    const res = await fetch(`${baseUrl}/api/categories`);
-    
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
-    
-    const data = await res.text(); // Önce metin olarak al
-    console.log('Raw response:', data); // Hata ayıklama için
-    
-    const categories = JSON.parse(data);
-    
+    const categories = await prisma.category.findMany();
+
     return {
       props: { categories },
     };
   } catch (error) {
-    console.error('Error fetching categories:', error);
+    console.error('Veri çekme hatası:', error);
     return {
-      props: { categories: [] }, // Hata durumunda boş array dön
+      props: { categories: [] },
     };
   }
 }
+
 export default function HomePage({ categories }) {
   return (
     <div style={styles.container}>
-      {categories.map((category) => (
-        <CategoryCard
-          key={category.id}
-          title={category.name}
-          slug={category.slug}
-        />
-      ))}
+      {categories.length === 0 ? (
+        <p>Kategori bulunamadı.</p>
+      ) : (
+        categories.map((category) => (
+          <CategoryCard
+            key={category.id}
+            title={category.name}
+            slug={category.slug}
+          />
+        ))
+      )}
     </div>
   );
 }
