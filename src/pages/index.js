@@ -1,7 +1,11 @@
 import CategoryCard from '../components/CategoryCard';
 
-export async function getServerSideProps() {
-  const res = await fetch('http://localhost:3000/api/categories');
+export async function getServerSideProps(context) {
+  const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+  const host = context.req.headers.host;
+  const baseUrl = `${protocol}://${host}`;
+
+  const res = await fetch(`${baseUrl}/api/categories`);
   const categories = await res.json();
 
   return {
