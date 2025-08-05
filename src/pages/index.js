@@ -1,9 +1,8 @@
 import CategoryCard from '../components/CategoryCard';
 
-export async function getServerSideProps(context) {
-  const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
-  const host = context.req.headers.host;
-  const baseUrl = `${protocol}://${host}`;
+export async function getServerSideProps() {
+  // Ortama göre base URL ayarı
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
   const res = await fetch(`${baseUrl}/api/categories`);
   const categories = await res.json();
