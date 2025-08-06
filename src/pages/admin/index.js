@@ -211,7 +211,10 @@ export default function AdminPanel() {
                       placeholder="Örnek: Taze levrek, zeytinyağlı sos ile..." 
                       value={menuItem.description} 
                       onChange={e => setMenuItem({ ...menuItem, description: e.target.value })} 
-                      className="w-full border border-blue-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all h-24" 
+                      className="w-full border-2 border-gray-300 rounded-lg px-4 py-2.5
+                                 text-gray-900 font-medium placeholder-gray-600
+                                 focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                                 bg-white shadow-sm outline-none transition-all min-h-[120px]" 
                     />
                   </div>
                 </div>
