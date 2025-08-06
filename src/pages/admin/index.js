@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { FiPlus, FiUpload, FiEdit2, FiTrash2, FiSettings, FiLogOut } from 'react-icons/fi';
 import { motion } from 'framer-motion';
+import QrCodeCard from '@/components/QrCodeCard';
 
 export default function AdminPanel() {
   const [activeTab, setActiveTab] = useState('menu');
@@ -134,13 +135,14 @@ export default function AdminPanel() {
     { key: 'menu', label: 'Menü Yönetimi', icon: <FiPlus className="inline mr-2" /> },
     { key: 'category', label: 'Kategori Yönetimi', icon: <FiUpload className="inline mr-2" /> },
     { key: 'edit', label: 'İçerik Düzenle', icon: <FiSettings className="inline mr-2" /> },
+    { key: 'qr', label: 'QR Kod Oluştur', icon: <FiSettings className="inline mr-2" /> },
   ];
 
   if (!isAuthorized) return null;
 
   return (
     <div className="min-h-screen bg-blue-50">
-      {/* Premium Header */}
+      
       <header className="bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold tracking-tight">Türkoğlu Admin Paneli</h1>
@@ -159,7 +161,7 @@ export default function AdminPanel() {
       </header>
 
       <div className="container mx-auto px-6 py-8">
-        {/* Şık Tab Bar */}
+       
         <div className="flex border-b border-blue-200 mb-8">
           {tabs.map((tab) => (
             <motion.button
@@ -177,8 +179,7 @@ export default function AdminPanel() {
           ))}
         </div>
 
-        {/* Ana İçerik Kutusu */}
-        <motion.div 
+       <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           className="bg-white rounded-xl shadow-md overflow-hidden border border-blue-100"
@@ -192,74 +193,74 @@ export default function AdminPanel() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-blue-700 mb-1">Yemek Adı</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Yemek Adı</label>
                     <input 
-                      placeholder="Örnek: Levrek Izgara" 
+                      placeholder="Levrek Izgara" 
                       value={menuItem.name} 
                       onChange={e => setMenuItem({ ...menuItem, name: e.target.value })} 
-                      className="w-full border-2 border-gray-300 rounded-lg px-4 py-2.5
-                      text-gray-900 font-medium placeholder-gray-600
-                      focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                      bg-white shadow-sm outline-none transition-all" 
+                      className="w-full border border-gray-300 rounded-lg px-4 py-2.5
+                                text-gray-800 placeholder-gray-400 font-normal
+                                focus:outline-none focus:ring-1 focus:ring-blue-500
+                                bg-white transition-all"
                       required 
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-blue-700 mb-1">Açıklama</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Açıklama</label>
                     <textarea 
-                      placeholder="Örnek: Taze levrek, zeytinyağlı sos ile..." 
+                      placeholder="Taze levrek, zeytinyağlı sos ile..." 
                       value={menuItem.description} 
                       onChange={e => setMenuItem({ ...menuItem, description: e.target.value })} 
-                      className="w-full border-2 border-gray-300 rounded-lg px-4 py-2.5
-                                 text-gray-900 font-medium placeholder-gray-600
-                                 focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                                 bg-white shadow-sm outline-none transition-all min-h-[120px]" 
+                      className="w-full border border-gray-300 rounded-lg px-4 py-2.5
+                                text-gray-800 placeholder-gray-400 font-normal
+                                focus:outline-none focus:ring-1 focus:ring-blue-500
+                                bg-white transition-all min-h-[120px]"
                     />
                   </div>
                 </div>
                 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-blue-700 mb-1">Fiyat (₺)</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Fiyat (₺)</label>
                     <input 
                       type="number" 
-                      placeholder="Örnek: 120" 
+                      placeholder="120" 
                       value={menuItem.price} 
                       onChange={e => setMenuItem({ ...menuItem, price: Number(e.target.value) })} 
-                      className="w-full border-2 border-gray-300 rounded-lg px-4 py-2.5
-                      text-gray-900 font-medium placeholder-gray-600
-                      focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                      bg-white shadow-sm outline-none transition-all" 
+                      className="w-full border border-gray-300 rounded-lg px-4 py-2.5
+                                text-gray-800 placeholder-gray-400 font-normal
+                                focus:outline-none focus:ring-1 focus:ring-blue-500
+                                bg-white transition-all"
                       required 
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-blue-700 mb-1">Görsel URL</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Görsel URL</label>
                     <input 
-                      placeholder="https://example.com/image.jpg" 
+                      placeholder="https://example.com/resim.jpg" 
                       value={menuItem.image} 
                       onChange={e => setMenuItem({ ...menuItem, image: e.target.value })} 
-                      className="w-full border-2 border-gray-300 rounded-lg px-4 py-2.5
-                      text-gray-900 font-medium placeholder-gray-600
-                      focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                      bg-white shadow-sm outline-none transition-all" 
+                      className="w-full border border-gray-300 rounded-lg px-4 py-2.5
+                                text-gray-800 placeholder-gray-400 font-normal
+                                focus:outline-none focus:ring-1 focus:ring-blue-500
+                                bg-white transition-all"
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-blue-700 mb-1">Kategori</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
                     <select 
                       value={menuItem.categoryId} 
                       onChange={e => setMenuItem({ ...menuItem, categoryId: Number(e.target.value) })} 
-                      className="w-full border-2 border-gray-300 rounded-lg px-4 py-2.5
-                      text-gray-900 font-medium placeholder-gray-600
-                      focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                      bg-white shadow-sm outline-none transition-all" 
+                      className="w-full border border-gray-300 rounded-lg px-4 py-2.5
+                                text-gray-800 font-normal
+                                focus:outline-none focus:ring-1 focus:ring-blue-500
+                                bg-white transition-all"
                       required
                     >
-                      <option value="">Kategori Seçiniz</option>
+                      <option value="" className="text-gray-400">Kategori Seçiniz</option>
                       {categories.map((cat) => (
                         <option key={cat.id} value={cat.id}>{cat.name}</option>
                       ))}
@@ -273,62 +274,18 @@ export default function AdminPanel() {
                   type="submit"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-medium transition-all shadow-md"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-medium transition-all"
                 >
                   {editingMenu ? 'Güncelle' : 'Kaydet'}
                 </motion.button>
               </div>
             </form>
           )}
-
-          {activeTab === 'category' && (
-            <form onSubmit={handleCategorySubmit} className="p-6 space-y-5">
-              <h2 className="text-xl font-semibold text-blue-800 border-b pb-2 mb-4">
-                {editingCategory ? 'Kategori Düzenle' : 'Yeni Kategori Ekle'}
-              </h2>
-              
-              <div className="space-y-4 max-w-md">
-                <div>
-                  <label className="block text-sm font-medium text-blue-700 mb-1">Kategori Adı</label>
-                  <input 
-                    placeholder="Örnek: Ana Yemekler" 
-                    value={categoryName} 
-                    onChange={e => setCategoryName(e.target.value)} 
-                    className="w-full border-2 border-gray-300 rounded-lg px-4 py-2.5
-            text-gray-900 font-medium placeholder-gray-600
-            focus:ring-2 focus:ring-blue-500 focus:border-transparent
-            bg-white shadow-sm outline-none transition-all" 
-                    required 
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-blue-700 mb-1">Görsel URL (Opsiyonel)</label>
-                  <input 
-                    placeholder="https://example.com/image.jpg" 
-                    value={categoryImage} 
-                    onChange={e => setCategoryImage(e.target.value)} 
-                    className="w-full border-2 border-gray-300 rounded-lg px-4 py-2.5
-            text-gray-900 font-medium placeholder-gray-600
-            focus:ring-2 focus:ring-blue-500 focus:border-transparent
-            bg-white shadow-sm outline-none transition-all" 
-                  />
-                </div>
-              </div>
-              
-              <div className="pt-4">
-                <motion.button
-                  type="submit"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-medium transition-all shadow-md"
-                >
-                  {editingCategory ? 'Güncelle' : 'Kaydet'}
-                </motion.button>
-              </div>
-            </form>
-          )}
-
+           {activeTab === 'qr' && (
+    <div className="flex justify-center">
+      <QrCodeCard siteUrl="https://qr-men.vercel.app/" />
+    </div>
+  )}
           {activeTab === 'edit' && (
             <div className="p-6 space-y-8">
               <div>

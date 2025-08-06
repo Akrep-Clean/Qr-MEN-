@@ -96,7 +96,7 @@ export default function CategoryPage() {
           textAlign: 'center',
           flex: 1
         }}>
-          {slug.toUpperCase()} Menüsü
+          {slug.toUpperCase()} 
         </h1>
       </div>
 
